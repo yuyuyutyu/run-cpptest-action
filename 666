@@ -1,0 +1,115 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include "小游.h"
+#include<ege.h>
+#include<graphics.h>
+#include<stdio.h>
+#include<stdlib.h>
+//#include<conio.h>
+
+int map[13][13] =
+{
+	0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,16,1,9,8,9,1,1,1,1,1,1,0,
+	0,0,0,0,0,0,0,0,0,0,0,1,0,
+	0,6,1,1,2,1,0,0,1,1,1,1,0,
+	0,1,11,1,0,1,0,0,13,2,0,1,0,
+	0,0,2,0,0,1,2,10,18,10,0,1,0,
+	0,4,1,1,0,1,0,0,0,0,0,1,0,
+	0,1,11,1,0,1,0,0,0,0,0,1,0,
+	0,0,2,0,0,1,1,0,0,0,0,1,0,
+	0,1,1,1,0,0,2,0,0,0,0,0,0,
+	0,6,1,4,0,4,1,4,0,1,10,1,0,
+	0,6,1,4,0,1,15,1,0,9,7,9,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,
+};
+
+struct juese
+{
+	char mz[20];
+	int HP, MP, ATK, DEF, l, j, LV, EXP;
+}js;
+
+struct dr
+{
+	int hp, atk, def, dex;
+
+};struct dr 蝙蝠={90,10,10,50};
+
+IMAGE img[19], roleInfo;
+HWND hwnd;
+
+void jsxm()
+{
+	printf("请输入名字：");
+	scanf("%s", &js.mz);
+	js.ATK = 15;
+	js.DEF = 5;
+	js.HP = 330;
+	js.MP = 100;
+	js.l = 0;
+	js.j = 0;
+	js.LV = 0;
+	js.EXP = 0;
+}
+
+void jzzy()
+{
+	// char loadimage = 0;
+	 loadimage(&roleInfo, "info.jpg");
+	for (int i = 0;i <= 18;i++)
+	{
+		char fileName[20]="";
+		sprintf(fileName, "%d.jpg",i);
+		loadimage(img + i, fileName, 60, 60);
+	}
+}
+
+char str[20] = "";
+char* intToWcahr(int xNum)
+{
+	sprintf(str, "%d", xNum);
+	return str;
+}
+
+void c()
+{
+	int i, j, x, y;
+	for(i=0;i<13;i++)
+	for (j = 0;j < 13;j++)
+	{
+		x = 60 * j; y = 60 * i;
+		putimage(x, y, &img[map[i][j]]);
+	}
+	putimage(60 * 13, 0, &roleInfo);
+	outtextxy(60 * 13 + 12, 100, js.mz);
+	outtextxy(60 * 13 + 12, 180, intTOwcahr(js.LV));
+	outtextxy(60 * 13 + 12, 235, intTOwcahr(js.EXP));
+	outtextxy(60 * 13 + 12, 362, intTOwcahr(js.HP));
+	outtextxy(60 * 13 + 12, 425, intTOwcahr(js.MP));
+	outtextxy(60 * 13 + 12, 517, intTOwcahr(js.ATK));
+	outtextxy(60 * 13 + 12, 517, intTOwcahr(js.DEF));
+	outtextxy(60 * 13 + 12, 689, intTOwcahr(js.l));
+	outtextxy(60 * 13 + 12, 759, intTOwcahr(js.j));
+}
+
+int main()
+{
+	jsxm();
+	jzzy();
+	initgraph(60 * 14, 60 * 13);
+
+	IMAGE mm;
+	loadimage(&mm, "mm.jpg");
+	putimage(0, 0, &mm);
+	
+
+	c();
+
+
+
+	int a=getch();
+	closegraph();
+	//system("pause");
+	return 0;
+}
